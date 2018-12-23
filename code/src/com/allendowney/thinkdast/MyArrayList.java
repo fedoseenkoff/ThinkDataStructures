@@ -44,8 +44,15 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public boolean add(T element) {
-		// TODO: FILL THIS IN!
-		return false;
+		if (size >= array.length) {
+			// make a bigger array and copy over the elements
+			T[] bigger = (T[]) new Object[array.length * 2];
+			System.arraycopy(array, 0, bigger, 0, array.length);
+			array = bigger;
+		}
+		array[size] = element;
+		size++;
+		return true;
 	}
 
 	@Override
@@ -201,8 +208,15 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: FILL THIS IN!
-		return null;
+		if (index < 0) {
+			throw new IndexOutOfBoundsException();
+		} else if (index >= size()) {
+			add(index, element);
+			return null;
+		}
+		T oldVal = array[index];
+		array[index] = element;
+		return oldVal;
 	}
 
 	@Override
